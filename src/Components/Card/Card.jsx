@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './card.css'
 function Card(props){
-    const {} = props
+    const {num,successInput,failInput} = props
     const [time,setTime] = useState("00:00:00")
     useEffect(()=>{
         const oldDate = Date.now()
@@ -23,8 +23,26 @@ function Card(props){
     
     return (
         <div className="card">
-            <div className='cardSon'><span >{time}</span></div>
-            <div className='cardSon'><span >num</span></div>
+            <div className='cardSon'>
+                <span >{time}</span>
+                <div className='line'></div>
+                <span>时间</span>
+            </div>
+            <div className='cardSon'>
+                <span >{num}</span>
+                <div className='line'></div>
+                <span>完成个数</span>
+            </div>
+            <div className='cardSon'>
+                <span >{successInput}</span>
+                <div className='line'></div>
+                <span>输入个数</span>
+            </div>
+            <div className='cardSon'>
+                <span >{successInput-failInput}</span>
+                <div className='line'></div>
+                <span>正确个数</span>
+            </div>
         </div>
     )
 }

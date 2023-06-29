@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react'
 import './Main.css'
 import CET4 from '@/public/dicts/CET4_T.json'
 
-function Main() {
+function Main({reqNum}) {
     const [wordArr, setWordArr] = useState(CET4);
     const [firstWord, setFirstWord] = useState(wordArr[0]);
     const [num, setNum] = useState(0);
     const [wordNum,setWordNum] = useState(0)
+    const [successInput,setSuccessInput] = useState(0);
+    const [failInput,setFailInput] = useState(0);
     const mainWordArr = document.getElementsByClassName('mainWord');
     const wordSort = document.getElementsByClassName('wordSort')[0];
 
@@ -40,6 +42,7 @@ function Main() {
                         resetMainWord()
                     }else{
                         mainWordArr[num].classList.add('successWord');
+                        setSuccessInput(successInput+1);
                         setNum(num + 1);
                     }
 
@@ -49,8 +52,10 @@ function Main() {
                     wordSort.classList.add('shake-effect');
                     setNum(0)
                     delayResetMainWord()
+                    setFailInput(failInput+1)
                 }
             }
+            reqNum(wordNum,successInput,failInput)
         }
 
         window.addEventListener('keydown', keyTrigger)
@@ -62,6 +67,7 @@ function Main() {
 
     useEffect(()=>{
         setFirstWord(wordArr[wordNum])
+        reqNum(wordNum,successInput,failInput)
     },[wordNum])
 
     return (
