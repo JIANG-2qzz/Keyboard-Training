@@ -6,6 +6,7 @@
 .wordSort {
     display: flex;
     user-select: none;
+    margin: 100px;
 }
 
 .successWord{

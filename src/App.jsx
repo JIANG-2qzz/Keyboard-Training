@@ -1,7 +1,6 @@
-import { useEffect } from "react"
 import Layout from "./Layout/layout"
 import Main from "./Components/Main/Main.jsx"
-// import demo from '../public/dicts/CET4_T.json'
+import Card from "./Components/Card/Card.jsx"
 
 function App() {
 
@@ -9,6 +8,7 @@ function App() {
     <>
     <Layout>
       <Main></Main>
+      <Card></Card>
     </Layout>
     </>
   )
