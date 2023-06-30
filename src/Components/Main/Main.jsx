@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './Main.css'
 import CET4 from '@/public/dicts/CET4_T.json'
 
-function Main({reqNum}) {
+function Main({reqNum,shade}) {
     const [wordArr, setWordArr] = useState(CET4);
     const [firstWord, setFirstWord] = useState(wordArr[0]);
     const [num, setNum] = useState(0);
@@ -30,32 +30,38 @@ function Main({reqNum}) {
     useEffect(() => {
 
         function keyTrigger(e) {
-            if (e.keyCode >= 65 && e.keyCode <= 90) {
-                const key = String.fromCharCode(e.keyCode).toLowerCase();
-                const letter = (firstWord.name)[num].toLowerCase();
-                const firstWordLength = firstWord.name.length;
-                if (key === letter) {
-                    //成功
-                    if(num >= firstWordLength-1){
-                        setWordNum(wordNum+1)
+            if(!shade){
+                if (e.keyCode >= 65 && e.keyCode <= 90) {
+                    const key = String.fromCharCode(e.keyCode).toLowerCase();
+                    const letter = (firstWord.name)[num].toLowerCase();
+                    const firstWordLength = firstWord.name.length;
+                    
+                    if (key === letter) {
+                        //成功
+                        if(num >= firstWordLength-1){
+                            setWordNum(wordNum+1);
+                            setSuccessInput(successInput+1);
+                            setNum(0)
+                            resetMainWord()
+                        }else{
+                            mainWordArr[num].classList.add('successWord');
+                            setSuccessInput(successInput+1);
+                            setNum(num + 1);
+                        }
+    
+                    } else {
+                        //失败
+                        mainWordArr[num].classList.add('failWord');
+                        wordSort.classList.add('shake-effect');
                         setNum(0)
-                        resetMainWord()
-                    }else{
-                        mainWordArr[num].classList.add('successWord');
-                        setSuccessInput(successInput+1);
-                        setNum(num + 1);
+                        delayResetMainWord()
+                        setFailInput(failInput+1)
                     }
-
-                } else {
-                    //失败
-                    mainWordArr[num].classList.add('failWord');
-                    wordSort.classList.add('shake-effect');
-                    setNum(0)
-                    delayResetMainWord()
-                    setFailInput(failInput+1)
+                    
                 }
+                
             }
-            reqNum(wordNum,successInput,failInput)
+            
         }
 
         window.addEventListener('keydown', keyTrigger)
@@ -63,12 +69,12 @@ function Main({reqNum}) {
         return () => {
             window.removeEventListener('keydown', keyTrigger)
         }
-    }, [num,firstWord])
+    }, [num,firstWord,shade])
 
     useEffect(()=>{
         setFirstWord(wordArr[wordNum])
         reqNum(wordNum,successInput,failInput)
-    },[wordNum])
+    },[wordNum,successInput])
 
     return (
         <div className='wordSort'>
