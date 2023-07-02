@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './card.css'
+import './Card.css'
 function Card(props) {
     const { num, successInput, failInput, shade } = props
     const [startTime, setStartTime] = useState(0);
