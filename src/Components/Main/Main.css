@@ -6,7 +6,7 @@
 .wordSort {
     display: flex;
     user-select: none;
-    margin: 100px;
+    margin: 80px 80px 0px 80px ;
 }
 
 .successWord{
@@ -14,6 +14,13 @@
 }
 .failWord{
     color: #E6000D;
+}
+.CardBox{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
 }
 
 @keyframes shake {
