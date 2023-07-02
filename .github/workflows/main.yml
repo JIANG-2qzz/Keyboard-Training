@@ -1,0 +1,30 @@
+name: Deploy_website
+on: # 监听 master 分支上的 push 事件
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Deploy_website
+    runs-on: ubuntu-latest # 构建环境使用 ubuntu
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.1
+      - name: install nodejs  
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: "14.x"
+      - name: install deps
+        run : npm install
+      - name: build app
+        run : npm run build
+      - name: copy dist file with scp
+        uses: easingthemes/ssh-deploy@main
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.ECS_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.ECS_SERVER_HOST }}
+          REMOTE_USER: ${{ secrets.ECS_REMOTE_USER }}
+          SOURCE: "dist/*"
+          ARGS: '-avzr --delete'
+          TARGET: "/www/client/Keyboard_Page/"
